@@ -34,10 +34,11 @@ int mydgetrf(double *A, int *ipiv, int n)
     int temps;
     double tempv[n];
     int i, t, j, k;
+    int a, b, c;
     for (i = 1 ; i < n-1 ; i++){
         maxind = i; 
         max = abs(A[i][i]); 
-        for (int t = i+1 ; t <= n ; t++){
+        for (t = i+1 ; t <= n ; t++){
             if (abs(A[t][i]) > max ) {
                 maxind = t; 
                 max = abs(A[t][i]); 
@@ -51,10 +52,10 @@ int mydgetrf(double *A, int *ipiv, int n)
         if (maxind != i ) {
             temps = ipiv[i]; 
             ipiv[i] = ipiv[maxind]; 
-            ipiv[maxind] = temps; 
-            tempv = A[i][]; 
-            A[i][] = A[maxind][]; 
-            A[maxind][] = tempv;
+            ipiv[maxind] = temps;
+            for (a=0 ; a <=n ; a++) tempv[a] = A[i][a]; 
+            for (b=0 ; b <=n ; b++) A[i][b] = A[maxind][b]; 
+            for (c=0 ; c <=n ; c++) A[maxind][c] = tempv[c];
         }
     
     for (j = i+1 ; j <= n ; j++) {
@@ -96,6 +97,26 @@ int mydgetrf(double *A, int *ipiv, int n)
 void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
 {
     /* add your code here */
+    //forward substitution for lower triangular
+    /*
+    double y[n], x[n];
+
+    if (UPLO == 'L'){
+        int i;
+        y[1] = B[ipiv[1]];
+        for (i=2; i<=n ; i++){
+            y(i)=b(pvt(i)) - sum (y(1:i-1) .* A(i,1:i));
+        }
+    }
+    //backward substitution for upper triangular
+    if (UPLO == 'U'){
+        int i;
+        x[n] = y[n] / A[n,n];
+        for (i=n-1 ; i<=1 ; i--){
+            x[i]= (y[i] - sum (x(i+1:n) .* A(i,i+1:n)))/A(i,i);
+        }
+    }
+    */
     return;
 }
 
