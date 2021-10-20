@@ -75,6 +75,19 @@ void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
 {
     /* add your code here */
     /* please just copy from your lab1 function optimal( ... ) */
+    int i1, j1, k1;
+    for (i = 0; i < n; i+=b)
+        for (j = 0; j < n; j+=b)
+            for (k = 0; k < n; k+=b)
+             /* B x B mini matrix multiplications */
+                for (i1 = i; i1 < i+b; i1++)
+                    for (j1 = j; j1 < j+b; j1++)
+                        for (k1 = k; k1 < k+b; k1++){
+                            C[i*n + j]         = A[i*n + k] * B[k*n + j] + A[i*n + k+1] * B[(k+1)*n + j] + C[i*n + j];                                       
+                            C[(i+1)*n + j]     = A[(i+1)*n + k] * B[k*n + j] + A[(i+1)*n + k+1] * B[(k+1)*n + j] + C[(i+1)*n + j];                    
+                            C[i*n + (j+1)]     = A[i*n + k] * B[k*n + (j+1)] + A[i*n + k+1] * B[(k+1)*n + (j+1)] + C[i*n + (j+1)];                    
+                            C[(i+1)*n + (j+1)] = A[(i+1)*n + k] * B[k*n + (j+1)] + A[(i+1)*n + k+1] * B[(k+1)*n + (j+1)] + C[(i+1)*n + (j+1)];
+                        } 
     return;
 }
 
