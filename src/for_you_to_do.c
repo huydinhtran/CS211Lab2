@@ -137,19 +137,91 @@ void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
 {
     /* add your code here */
     /* please just copy from your lab1 function optimal( ... ) */
-    int i1, j1, k1;
-    for (i = 0; i < n; i+=b)
-        for (j = 0; j < n; j+=b)
-            for (k = 0; k < n; k+=b)
-             /* B x B mini matrix multiplications */
-                for (i1 = i; i1 < i+b; i1++)
-                    for (j1 = j; j1 < j+b; j1++)
-                        for (k1 = k; k1 < k+b; k1++){
-                            C[i*n + j]         = A[i*n + k] * B[k*n + j] + A[i*n + k+1] * B[(k+1)*n + j] + C[i*n + j];                                       
-                            C[(i+1)*n + j]     = A[(i+1)*n + k] * B[k*n + j] + A[(i+1)*n + k+1] * B[(k+1)*n + j] + C[(i+1)*n + j];                    
-                            C[i*n + (j+1)]     = A[i*n + k] * B[k*n + (j+1)] + A[i*n + k+1] * B[(k+1)*n + (j+1)] + C[i*n + (j+1)];                    
-                            C[(i+1)*n + (j+1)] = A[(i+1)*n + k] * B[k*n + (j+1)] + A[(i+1)*n + k+1] * B[(k+1)*n + (j+1)] + C[(i+1)*n + (j+1)];
-                        } 
+    for (i = 0; i < n; i += 3) {
+        for (j = 0; j < n; j += 3) {
+            register int t   = i*n+j; 
+            register int tt  = t+n; 
+            register int ttt = tt+n; 
+            register double x00 = C[t];
+            register double x01 = C[t+1];
+            register double x02 = C[t+2];
+            register double x10 = C[tt];
+            register double x11 = C[tt+1];
+            register double x12 = C[tt+2];
+            register double x20 = C[ttt];
+            register double x21 = C[ttt+1];
+            register double x22 = C[ttt+2];
+            for (k = 0; k < n; k += 3) {
+                register int ta   = i*n+k;
+                register int tta  = ta+n;
+                register int ttta = tta+n;
+                register int tb   = k*n+j;
+                register int ttb  = tb+n;
+                register int tttb = ttb+n;
+
+                register double R1 = A[ta]; 
+                register double R2 = A[tta]; 
+                register double R3 = A[ttta];
+                register double R4 = B[tb]; 
+                register double R5 = B[tb+1]; 
+                register double R6 = B[tb+2]; 
+
+                x00 += R1 * R4;
+                x01 += R1 * R5;
+                x02 += R1 * R6;
+                x10 += R2 * R4;
+                x11 += R2 * R5;
+                x12 += R2 * R6;
+                x20 += R3 * R4;
+                x21 += R3 * R5;
+                x22 += R3 * R6;
+
+                R1 = A[ta+1];
+                R2 = A[tta+1];
+                R3 = A[ttta+1];
+                R4 = B[ttb];
+                R5 = B[ttb+1];
+                R6 = B[ttb+2];
+
+                x00 += R1 * R4;
+                x01 += R1 * R5;
+                x02 += R1 * R6;
+                x10 += R2 * R4;
+                x11 += R2 * R5;
+                x12 += R2 * R6;
+                x20 += R3 * R4;
+                x21 += R3 * R5;
+                x22 += R3 * R6;
+
+                R1 = A[ta+2];
+                R2 = A[tta+2];
+                R3 = A[ttta+2];
+                R4 = B[tttb];
+                R5 = B[tttb+1];
+                R6 = B[tttb+2];
+
+                x00 += R1 * R4;
+                x01 += R1 * R5;
+                x02 += R1 * R6;
+                x10 += R2 * R4;
+                x11 += R2 * R5;
+                x12 += R2 * R6;
+                x20 += R3 * R4;
+                x21 += R3 * R5;
+                x22 += R3 * R6;
+            
+            }
+            C[t]     = x00;
+            C[t+1]   = x01;
+            C[t+2]   = x02;
+            C[tt]    = x10;
+            C[tt+1]  = x11;
+            C[tt+2]  = x12;
+            C[ttt]   = x20;
+            C[ttt+1] = x21;
+            C[ttt+2] = x22;
+        }
+    }
     return;
 }
 
@@ -183,6 +255,18 @@ void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
  **/
 int mydgetrf_block(double *A, int *ipiv, int n, int b) 
 {
+    int ib, end;
+    for ( ib = 1 ; ib <=n-1 ; ib += b){
+
+    }     //Process matrix b columns at a time
+    end = ib + b-1               //Point to end of block of b columns 
+    //apply BLAS2 version of GEPP to  get A(ib:n , ib:end) = P’ * L’ * U’
+    //… let LL denote the strict lower triangular part of A(ib:end , ib:end) + I
+    A(ib:end , end+1:n) = LL-1 * A(ib:end , end+1:n)         //… update next b rows of U
+    A(end+1:n , end+1:n ) = A(end+1:n , end+1:n ) - A(end+1:n , ib:end) * A(ib:end , end+1:n)    
+                                       //… apply delayed updates with single matrix-multiply
+                                       //… with inner dimension b
+
     return 0;
 }
 
