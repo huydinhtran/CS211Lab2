@@ -255,7 +255,7 @@ void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
  **/
 int mydgetrf_block(double *A, int *ipiv, int n, int b) 
 {
-    int ib, end;
+    /*int ib, end;
     for ( ib = 1 ; ib <=n-1 ; ib += b){
 
     }     //Process matrix b columns at a time
@@ -265,7 +265,7 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
     A(ib:end , end+1:n) = LL-1 * A(ib:end , end+1:n)         //… update next b rows of U
     A(end+1:n , end+1:n ) = A(end+1:n , end+1:n ) - A(end+1:n , ib:end) * A(ib:end , end+1:n)    
                                        //… apply delayed updates with single matrix-multiply
-                                       //… with inner dimension b
+                                       //… with inner dimension b*/
 
     return 0;
 }
