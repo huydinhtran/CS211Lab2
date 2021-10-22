@@ -1,5 +1,6 @@
 #include "../include/for_you_to_do.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 
 
 int get_block_size(){
@@ -32,8 +33,8 @@ int mydgetrf(double *A, int *ipiv, int n)
 {
     /* add your code here */
     int maxind;
-    double max;
     int temps;
+    double max;
     double tempv[n];
     int i, t, j, k;
     int a, b, c;
