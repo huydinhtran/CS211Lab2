@@ -97,33 +97,33 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
 {
     /* add your code here */
     //forward substitution for lower triangular
-    double y[n], x[n];
+//     double y[n], x[n];
 
-    if (UPLO == 'L'){
-        int i;
-        int a;
-        double sum;
-        y[1] = B[ipiv[1]];
-        for (i=2 ; i<n ; i++){
-            for (a=1 ; a<=i-1 ; a++){
-                sum += y[a] * A[i*n+a];
-            }
-            y[i] = B[ipiv[i]] - sum;
-        }
-    }
-    //backward substitution for upper triangular
-    if (UPLO == 'U'){
-        int i;
-        int a;
-        double sum;
-        x[n] = y[n] / A[n*n+n];
-        for (i=n-1 ; i>1 ; i--){
-            for (a=i+1 ; a <= n ; a++){
-                sum += x[a] * A[i*n+a];
-            }
-            x[i] = (y[i] - sum) / A[i*n+i];
-        }
-    }
+//     if (UPLO == 'L'){
+//         int i;
+//         int a;
+//         double sum;
+//         y[1] = B[ipiv[1]];
+//         for (i=2 ; i<n ; i++){
+//             for (a=1 ; a<=i-1 ; a++){
+//                 sum += y[a] * A[i*n+a];
+//             }
+//             y[i] = B[ipiv[i]] - sum;
+//         }
+//     }
+//     //backward substitution for upper triangular
+//     if (UPLO == 'U'){
+//         int i;
+//         int a;
+//         double sum;
+//         x[n] = y[n] / A[n*n+n];
+//         for (i=n-1 ; i>1 ; i--){
+//             for (a=i+1 ; a <= n ; a++){
+//                 sum += x[a] * A[i*n+a];
+//             }
+//             x[i] = (y[i] - sum) / A[i*n+i];
+//         }
+//     }
     return;
 }
 
