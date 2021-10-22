@@ -1,5 +1,8 @@
 #include "../include/for_you_to_do.h"
 
+
+printf(mydgetrf(A,ipiv,n));
+
 int get_block_size(){
     //return the block size you'd like to use 
     /*add your code here */
@@ -117,7 +120,7 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
         int a;
         double sum;
         x[n] = y[n] / A[n*n+n];
-        for (i=n-1 ; i<=1 ; i--){
+        for (i=n-1 ; i>=1 ; i--){
             for (a=i+1 ; a <= n ; a++){
                 sum += x[a] * A[i*n+a];
             }
@@ -254,7 +257,6 @@ void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
  **/
 int mydgetrf_block(double *A, int *ipiv, int n, int b) 
 {
-
     return 0;
 }
 
