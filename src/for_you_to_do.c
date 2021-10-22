@@ -136,26 +136,26 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
  **/
 void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
 {
-    /* add your code here */
-    /* please just copy from your lab1 function optimal( ... ) */
-    for (i = 0; i < n; i += 3) {
-        for (j = 0; j < n; j += 3) {
-            register int t   = i*n+j; 
-            register int tt  = t+n; 
-            register int ttt = tt+n; 
-            register double x00 = C[t];
-            register double x01 = C[t+1];
-            register double x02 = C[t+2];
-            register double x10 = C[tt];
-            register double x11 = C[tt+1];
-            register double x12 = C[tt+2];
-            register double x20 = C[ttt];
-            register double x21 = C[ttt+1];
-            register double x22 = C[ttt+2];
-            for (k = 0; k < n; k += 3) {
-                register int ta   = i*n+k;
-                register int tta  = ta+n;
-                register int ttta = tta+n;
+//     /* add your code here */
+//     /* please just copy from your lab1 function optimal( ... ) */
+//     for (i = 0; i < n; i += 3) {
+//         for (j = 0; j < n; j += 3) {
+//             register int t   = i*n+j; 
+//             register int tt  = t+n; 
+//             register int ttt = tt+n; 
+//             register double x00 = C[t];
+//             register double x01 = C[t+1];
+//             register double x02 = C[t+2];
+//             register double x10 = C[tt];
+//             register double x11 = C[tt+1];
+//             register double x12 = C[tt+2];
+//             register double x20 = C[ttt];
+//             register double x21 = C[ttt+1];
+//             register double x22 = C[ttt+2];
+//             for (k = 0; k < n; k += 3) {
+//                 register int ta   = i*n+k;
+//                 register int tta  = ta+n;
+//                 register int ttta = tta+n;
 //                 register int tb   = k*n+j;
 //                 register int ttb  = tb+n;
 //                 register int tttb = ttb+n;
