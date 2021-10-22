@@ -37,13 +37,13 @@ int mydgetrf(double *A, int *ipiv, int n)
     double tempv[n];
     int i, t, j, k;
     int a, b, c;
-    for (i = 1 ; i < n-1 ; i++){
+    for (i = 1 ; i <= n-1 ; i++){
         maxind = i; 
         max = abs(A[i*n+i]); 
         for (t = i+1 ; t <= n ; t++){
             if (abs(A[t*n+i]) > max ) {
                 maxind = t; 
-                max = abs(A[t*n+i]); 
+//                 max = abs(A[t*n+i]); 
             }
         }
     }
