@@ -48,15 +48,14 @@ int mydgetrf(double *A, int *ipiv, int n)
     
     if (max==0) 
         return -1; 
-    else 
-        if (maxind != i ) {
-            temps = ipiv[i]; 
-            ipiv[i] = ipiv[maxind]; 
-            ipiv[maxind] = temps;
-            for (a=0 ; a <=n ; a++) tempv[a] = A[i*n+a]; 
-            for (b=0 ; b <=n ; b++) A[i*n+b] = A[maxind*n+b]; 
-            for (c=0 ; c <=n ; c++) A[maxind*n+c] = tempv[c];
-        }
+    else if (maxind != i ) {
+        temps = ipiv[i]; 
+        ipiv[i] = ipiv[maxind]; 
+        ipiv[maxind] = temps;
+        for (a=0 ; a <=n ; a++) tempv[a] = A[i*n+a]; 
+        for (b=0 ; b <=n ; b++) A[i*n+b] = A[maxind*n+b]; 
+        for (c=0 ; c <=n ; c++) A[maxind*n+c] = tempv[c];
+    }
     
     for (j = i+1 ; j <= n ; j++) {
         A[j*n+i] = A[j*n+i]/A[i*n+i];
@@ -255,17 +254,6 @@ void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
  **/
 int mydgetrf_block(double *A, int *ipiv, int n, int b) 
 {
-    /*int ib, end;
-    for ( ib = 1 ; ib <=n-1 ; ib += b){
-
-    }     //Process matrix b columns at a time
-    end = ib + b-1               //Point to end of block of b columns 
-    //apply BLAS2 version of GEPP to  get A(ib:n , ib:end) = P’ * L’ * U’
-    //… let LL denote the strict lower triangular part of A(ib:end , ib:end) + I
-    A(ib:end , end+1:n) = LL-1 * A(ib:end , end+1:n)         //… update next b rows of U
-    A(end+1:n , end+1:n ) = A(end+1:n , end+1:n ) - A(end+1:n , ib:end) * A(ib:end , end+1:n)    
-                                       //… apply delayed updates with single matrix-multiply
-                                       //… with inner dimension b*/
 
     return 0;
 }
