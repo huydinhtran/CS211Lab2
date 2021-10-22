@@ -43,7 +43,7 @@ int mydgetrf(double *A, int *ipiv, int n)
         for (t = i+1 ; t <= n ; t++){
             if (abs(A[t*n+i]) > max ) {
                 maxind = t; 
-                max = abs(A[t*n+i-1]); 
+                max = abs(A[t*n+i]); 
             }
         }
     }
