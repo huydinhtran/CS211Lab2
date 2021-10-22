@@ -1,7 +1,6 @@
 #include "../include/for_you_to_do.h"
 
 
-printf(mydgetrf(A,ipiv,n));
 
 int get_block_size(){
     //return the block size you'd like to use 
