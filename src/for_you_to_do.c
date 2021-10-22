@@ -30,23 +30,23 @@ int get_block_size(){
 
 int mydgetrf(double *A, int *ipiv, int n) 
 {
-//     /* add your code here */
-//     int maxind;
-//     double max;
-//     int temps;
-//     double tempv[n];
-//     int i, t, j, k;
-//     int a, b, c;
-//     for (i = 1 ; i < n-1 ; i++){
-//         maxind = i; 
-//         max = abs(A[i*n+i]); 
-//         for (t = i+1 ; t <= n ; t++){
-//             if (abs(A[t*n+i]) > max ) {
-//                 maxind = t; 
-//                 max = abs(A[t*n+i]); 
-//             }
-//         }
-//     }
+    /* add your code here */
+    int maxind;
+    double max;
+    int temps;
+    double tempv[n];
+    int i, t, j, k;
+    int a, b, c;
+    for (i = 1 ; i < n-1 ; i++){
+        maxind = i; 
+        max = abs(A[i*n+i]); 
+        for (t = i+1 ; t <= n ; t++){
+            if (abs(A[t*n+i]) > max ) {
+                maxind = t; 
+                max = abs(A[t*n+i]); 
+            }
+        }
+    }
     
 //     if (max==0) 
 //         return -1; 
