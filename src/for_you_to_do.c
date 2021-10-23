@@ -97,8 +97,6 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
 {
     /* add your code here */
     //forward substitution for lower triangular
-//     double* y; 
-//     y= (double*) malloc (n * sizeof(double));
 
     if (UPLO == 'L'){
         int i;
