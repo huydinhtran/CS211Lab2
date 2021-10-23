@@ -104,7 +104,7 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
         int a;
         double sum;
         y[1] = B[ipiv[1]];
-        for (i=2 ; i<n ; i++){
+        for (i=2 ; i<=n ; i++){
             for (a=1 ; a<=i-1 ; a++){
                 sum += y[a] * A[i*n+a];
             }
@@ -117,7 +117,7 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
         int a;
         double sum;
         x[n] = y[n] / A[n*n+n];
-        for (i=n-1 ; i>1 ; i--){
+        for (i=n-1 ; i>=1 ; i--){
             for (a=i+1 ; a <= n ; a++){
                 sum += x[a] * A[i*n+a];
             }
