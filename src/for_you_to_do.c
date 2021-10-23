@@ -40,7 +40,7 @@ int mydgetrf(double *A, int *ipiv, int n)
     for (i = 1 ; i <= n-1 ; i++){
         maxind = i; 
         max = abs(A[i*n+i]); 
-        for (t = i+1 ; t <= n ; t++){
+        for (t = i+1 ; t < n ; t++){ //checked
             if (abs(A[t*n+i]) > max ) {
                 maxind = t; 
                 max = abs(A[t*n+i]); 
@@ -56,7 +56,7 @@ int mydgetrf(double *A, int *ipiv, int n)
             for (b=0 ; b <=n ; b++) A[i*n+b] = A[maxind*n+b]; 
             for (c=0 ; c <=n ; c++) A[maxind*n+c] = tempv[c];
         }
-        for (j = i+1 ; j < n ; j++) {
+        for (j = i+1 ; j <= n ; j++) {
             A[j*n+i] = A[j*n+i]/A[i*n+i];
             for (k = i+1 ; k <n ; k++)
                 A[j*n+k] = A[j*n+k] - A[j*n+i] * A[i*n+k]; 
