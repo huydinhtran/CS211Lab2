@@ -102,49 +102,49 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
         double sum;
         double* y; 
         y = (double*) malloc (n * sizeof(double));
-        B[0] = B[ipiv[0]];
+        y[0] = B[ipiv[0]];
         for (i=1 ; i<n ; i++){
             for (a=0 ; a < i-2 ; a++){
                 sum += y[a] * A[i*n+a];
             }
-            B[i] = B[ipiv[i]] - sum;
+            y[i] = B[ipiv[i]] - sum;
             sum = 0;
         }
     }
     //backward substitution for upper triangular
-    if (UPLO == 'U'){
-        int i;
-        int a, b;
-        double sum;
-        double x[n];
-        double* y; 
-        y = (double*) malloc (n * sizeof(double));
-        for (b=0 ; b<n ; b++) y[b] = B[b];
-        B[n-1] = y[n-1] / A[(n-1)*n+n-1];
-        for (i=n-2 ; i>=0 ; i--){
-            for (a=i+1 ; a < n ; a++){
-                sum += y[a] * A[i*n+a];
-            }
-            B[i] = (y[i] - sum) / A[i*n+i];
-            sum = 0;
-        }
-    }
-    
 //     if (UPLO == 'U'){
-//         int i, j;     
-//         int a, b;        
-//         double sum;        
-//         double x[n];       
-//         double* y;
-//         x[n-1] = B[n-1]/A[(n-1)*n + (n-1)];
-//         for (i=(n-2); i>=0; i--){
-//             x[i] = B[i];        
-//             for (j=i+1; j<n; j++){
-//                 x[i] -= A[(i)*n + j]*x[j];
-//             }             
-//             x[i] = x[i] / A[(i)*n + i];
+//         int i;
+//         int a, b;
+//         double sum;
+//         double x[n];
+//         double* y; 
+//         y = (double*) malloc (n * sizeof(double));
+//         for (b=0 ; b<n ; b++) y[b] = B[b];
+//         B[n-1] = y[n-1] / A[(n-1)*n+n-1];
+//         for (i=n-2 ; i>=0 ; i--){
+//             for (a=i+1 ; a < n ; a++){
+//                 sum += y[a] * A[i*n+a];
+//             }
+//             B[i] = (y[i] - sum) / A[i*n+i];
+//             sum = 0;
 //         }
 //     }
+    
+    if (UPLO == 'U'){
+        int i, j;     
+        int a, b;        
+        double sum;        
+        double x[n];       
+        double* y;
+        x[n-1] = B[n-1] / A[(n-1)*n+n-1];
+        for (i=(n-2) ; i>=0 ; i--){
+            x[i] = B[i];        
+            for (j=i+1 ; j<n ; j++){
+                x[i] -= A[(i)*n + j]*x[j];
+            }             
+            x[i] = x[i] / A[(i)*n + i];
+        }
+    }
     return;
 }
 
