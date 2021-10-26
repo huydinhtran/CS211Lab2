@@ -102,12 +102,12 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
         double sum;
         double* y; 
         y = (double*) malloc (n * sizeof(double));
-        y[0] = B[ipiv[0]];
+        B[0] = B[ipiv[0]];
         for (i=1 ; i<n ; i++){
             for (a=0 ; a < i-2 ; a++){
                 sum += y[a] * A[i*n+a];
             }
-            y[i] = B[ipiv[i]] - sum;
+            B[i] = B[ipiv[i]] - sum;
             sum = 0;
         }
     }
@@ -120,12 +120,12 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
         double* y; 
         y = (double*) malloc (n * sizeof(double));
         for (b=0 ; b<n ; b++) y[b] = B[b];
-        x[n-1] = y[n-1] / A[(n-1)*n+n-1];
+        B[n-1] = y[n-1] / A[(n-1)*n+n-1];
         for (i=n-2 ; i>=0 ; i--){
             for (a=i+1 ; a < n ; a++){
                 sum += y[a] * A[i*n+a];
             }
-            y[i] = (y[i] - sum) / A[i*n+i];
+            B[i] = (y[i] - sum) / A[i*n+i];
             sum = 0;
         }
     }
