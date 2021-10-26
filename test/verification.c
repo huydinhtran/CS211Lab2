@@ -81,9 +81,9 @@ int test_all_lu_functions()
 //         printf("B1 = %f\n",B1);
 //         printf("B2 = %f\n",B2);
         
-        int i, j;
-        for (i = 0; i < n; i++){
-            for (j = 0; j < m; j++) printf("%f ", A1[i*n+j]);
+        int a, b;
+        for (a = 0; a < n; a++){
+            for (b = 0; b < m; b++) printf("%f ", A1[a*n+b]);
             printf('\n');
         }
 
