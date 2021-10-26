@@ -83,7 +83,7 @@ int test_all_lu_functions()
         
         int a, b;
         for (a = 0; a < n; a++){
-            for (b = 0; b < m; b++) printf("%f ", A1[a*n+b]);
+            for (b = 0; b < n; b++) printf("%f ", A1[a*n+b]);
             printf('\n');
         }
 
