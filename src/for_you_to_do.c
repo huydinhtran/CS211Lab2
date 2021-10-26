@@ -110,11 +110,11 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
         }
         for (b=0 ; b<n ; b++) B[b] = y[b];
     }
+    
     //backward substitution for upper triangular
     if (UPLO == 'U'){
         int i;
         int a, b;
-        double sum;
         double* y; 
         y = (double*) malloc (n * sizeof(double));
         y[n-1] = B[n-1] / A[(n-1)*n+n-1];
@@ -126,7 +126,7 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
             }
             y[i] = y[i] / A[i*n + i];
         }
-//         for (b=0 ; b<n ; b++) B[b] = y[b];
+        for (b=0 ; b<n ; b++) B[b] = y[b];
     }
     
     return;
