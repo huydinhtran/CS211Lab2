@@ -59,6 +59,7 @@ int test_all_lu_functions()
         t1 = get_sec();
         printf("Elapsed time, MKL LAPACK: %lf seconds\n", t1 - t0);
 
+        
         t0 = get_sec();    
         naive_lu(A2, B2, n);
         t1 = get_sec();
