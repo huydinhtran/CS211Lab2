@@ -37,10 +37,10 @@ int mydgetrf(double *A, int *ipiv, int n)
     double tempv[n];
     int i, t, j, k;
     int a, b, c;
-    for (i = 1 ; i <= n-1 ; i++){
+    for (i = 0 ; i < n-1 ; i++){
         maxind = i; 
         max = abs(A[i*n+i]); 
-        for (t = i+1 ; t < n ; t++){ //checked
+        for (t = i ; t < n ; t++){ //checked
             if (abs(A[t*n+i]) > max ) {
                 maxind = t; 
                 max = abs(A[t*n+i]); 
@@ -52,13 +52,13 @@ int mydgetrf(double *A, int *ipiv, int n)
             temps = ipiv[i]; 
             ipiv[i] = ipiv[maxind]; 
             ipiv[maxind] = temps;
-            for (a=0 ; a <=n ; a++) tempv[a] = A[i*n+a]; 
-            for (b=0 ; b <=n ; b++) A[i*n+b] = A[maxind*n+b]; 
-            for (c=0 ; c <=n ; c++) A[maxind*n+c] = tempv[c];
+            for (a=0 ; a < n ; a++) tempv[a] = A[i*n+a]; 
+            for (b=0 ; b < n ; b++) A[i*n+b] = A[maxind*n+b]; 
+            for (c=0 ; c < n ; c++) A[maxind*n+c] = tempv[c];
         }
-        for (j = i+1 ; j < n ; j++) { //checked
+        for (j = i ; j < n ; j++) { 
             A[j*n+i] = A[j*n+i]/A[i*n+i];
-            for (k = i+1 ; k <= n ; k++) //checked
+            for (k = i ; k < n ; k++) 
                 A[j*n+k] = A[j*n+k] - A[j*n+i] * A[i*n+k]; 
         } 
     }
@@ -102,10 +102,10 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
         int a;
         double sum;
         double* y; 
-        y= (double*) malloc (n * sizeof(double));
-        y[1] = B[ipiv[1]];
-        for (i=2 ; i<n ; i++){
-            for (a=1 ; a<=i-1 ; a++){
+        y = (double*) malloc (n * sizeof(double));
+        y[0] = B[ipiv[0]];
+        for (i=1 ; i<n ; i++){
+            for (a=0 ; a<=i-1 ; a++){
                 sum += y[a] * A[i*n+a];
             }
             y[i] = B[ipiv[i]] - sum;
@@ -119,9 +119,9 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
         double x[n];
         double* y; 
         y = (double*) malloc (n * sizeof(double));
-        y[n-1]=x[n-1]/A[(n-1)*n+n-1];
         for (b=0 ; b<n ; b++) y[b] = x[b];
-        for (i=n-1 ; i>=1 ; i--){
+        y[n-1]=x[n-1]/A[(n-1)*n+n-1];
+        for (i=n-1 ; i>=0 ; i--){
             for (a=i+1 ; a < n ; a++){
                 sum += x[a] * A[i*n+a];
             }
