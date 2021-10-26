@@ -131,7 +131,7 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
 //     }
     
     if (UPLO == 'U'){
-        int i;     
+        int i, j;     
         int a, b;        
         double sum;        
         double x[n];       
