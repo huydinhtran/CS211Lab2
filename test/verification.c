@@ -23,7 +23,7 @@
 int test_all_lu_functions()
 {
     int block_size=get_block_size();
-    int ni, nList[] = {3,4};
+    int ni, nList[] = {3};
     for (ni = 0; ni < sizeof(nList) / sizeof(nList[0]); ni++) {
         int n = nList[ni], i, j;
 
