@@ -85,11 +85,12 @@ int test_all_lu_functions()
             }
             printf("\n");
         }
+        printf("\n");
         
     
         printf("B1\n");
         for (a = 0; a < n; a++) printf("%f ", B1[a]);
-        printf("\n");
+        printf("\n"); 
         
         
         printf("A2\n");
@@ -99,6 +100,7 @@ int test_all_lu_functions()
             }
             printf("\n");
         }
+        printf("\n");
         
     
         printf("B2\n");
