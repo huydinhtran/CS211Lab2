@@ -108,7 +108,7 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
             }
             y[i] += B[ipiv[i]];
         }
-//         for (b=0 ; b<n ; b++) B[b] = y[b];
+        for (b=0 ; b<n ; b++) B[b] = y[b];
     }
     //backward substitution for upper triangular
     if (UPLO == 'U'){
