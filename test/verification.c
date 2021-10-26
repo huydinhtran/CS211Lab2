@@ -82,7 +82,6 @@ int test_all_lu_functions()
         printf("B2 = %f\n",B2);
         printf("B3 = %f\n",B3);
         
-        printf("lapack_lu %f \n", lapack_lu(A1, B1, n));
 
         free(A1);
         free(A2);
