@@ -76,16 +76,17 @@ int test_all_lu_functions()
         if (verify_matrix(A1, A3, n, n) || verify_matrix(B1, B3, n, 1))
             printf("my block LU is incorrect.\n");
         
-//         printf("A1 = %f\n",A1);
-//         printf("A2 = %f\n",A2);
-//         printf("B1 = %f\n",B1);
-//         printf("B2 = %f\n",B2);
+        printf("A10 = %f\n",A1[0]);
+        printf("A11 = %f\n",A1[1]);
+        printf("A2 = %f\n",A2);
+        printf("B1 = %f\n",B1);
+        printf("B2 = %f\n",B2);
         
-        int a, b;
-        for (a = 0; a < n-1; a++){
-            for (b = 0; b < n-1; b++) printf("%f ", A1[a*n+b]);
-            printf('\n');
-        }
+//         int a, b;
+//         for (a = 0; a <= n-1; a++){
+//             for (b = 0; b <= n-1; b++) printf("%f ", A1[a*n+b]);
+//             printf('\n');
+//         }
 
         
 
