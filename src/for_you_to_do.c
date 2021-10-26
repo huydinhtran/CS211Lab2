@@ -121,14 +121,14 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
         double* y; 
         y = (double*) malloc (n * sizeof(double));
         
-        for (b=0 ; b<n ; b++) y[b] = B[b];
         y[n-1] = B[n-1] / A[(n-1)*n+n-1];
         
         for (i=n-2 ; i>=0 ; i--){
+            y[b] = B[b];
             for (a=i+1 ; a < n ; a++){
-                sum += y[a] * A[i*n+a];
+                y[i] -= A[a*n+i] * y[a];
             }
-            y[i] = (y[i] - sum) / A[i*n+i];
+            y[i] = y[i] / A[i*n + i];
             sum = 0;
         }
         for (b=0 ; b<n ; b++) B[b] = y[b];
