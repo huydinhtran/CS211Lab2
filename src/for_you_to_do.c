@@ -298,9 +298,19 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
 
         //… let LL denote the strict lower triangular part of A(ib:end , ib:end) + I  //… update next b rows of U //… apply delayed updates with single matrix-multiply  //… with inner dimension b
         
-        A(ib:end , end+1:n) = LL-1 * A(ib:end , end+1:n)         
-        A(end+1:n , end+1:n ) = A(end+1:n , end+1:n ) - A(end+1:n , ib:end) * A(ib:end , end+1:n)                    
-    }     
-
+        // A(ib:end , end+1:n) = LL-1 * A(ib:end , end+1:n)
+        for (i = ib ; i < end ; i++){
+            for (j = end+1 ; j < ib+b ; j++){
+                A[i*n+j] = LL-1 * A[i*n+j];
+            }
+        }
+        
+        // A(end+1:n , end+1:n ) -= A(end+1:n , ib:end) * A(ib:end , end+1:n)  
+        for (i = end+1 ; i < ib+b ; i++){
+            for (j = ib ; j < end ; j++){
+                A[i*n+j] = A[i*n+j] * A[j*n+i];
+            }
+        }                        
+    }  
     return 0;
 }
