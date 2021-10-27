@@ -93,18 +93,18 @@ int test_all_lu_functions()
         printf("\n"); printf("\n");
         
         
-        printf("A2\n");
+        printf("A3\n");
         for (a = 0; a < n; a++){
             for (b = 0; b < n; b++){
-                printf("%f ", A2[a*n+b]);
+                printf("%f ", A3[a*n+b]);
             }
             printf("\n");
         }
         printf("\n");
         
     
-        printf("B2\n");
-        for (a = 0; a < n; a++) printf("%f ", B2[a]);
+        printf("B3\n");
+        for (a = 0; a < n; a++) printf("%f ", B3[a]);
         printf("\n"); printf("\n");
         
 
