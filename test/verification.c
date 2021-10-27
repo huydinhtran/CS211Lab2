@@ -77,35 +77,35 @@ int test_all_lu_functions()
             printf("my block LU is incorrect.\n");
         
         
-        int a, b;
-        printf("A1\n");
-        for (a = 0; a < n; a++){
-            for (b = 0; b < n; b++){
-                printf("%f ", A1[a*n+b]);
-            }
-            printf("\n");
-        }
-        printf("\n");
+//         int a, b;
+//         printf("A1\n");
+//         for (a = 0; a < n; a++){
+//             for (b = 0; b < n; b++){
+//                 printf("%f ", A1[a*n+b]);
+//             }
+//             printf("\n");
+//         }
+//         printf("\n");
         
     
-        printf("B1\n");
-        for (a = 0; a < n; a++) printf("%f ", B1[a]);
-        printf("\n"); printf("\n");
+//         printf("B1\n");
+//         for (a = 0; a < n; a++) printf("%f ", B1[a]);
+//         printf("\n"); printf("\n");
         
         
-        printf("A2\n");
-        for (a = 0; a < n; a++){
-            for (b = 0; b < n; b++){
-                printf("%f ", A2[a*n+b]);
-            }
-            printf("\n");
-        }
-        printf("\n");
+//         printf("A2\n");
+//         for (a = 0; a < n; a++){
+//             for (b = 0; b < n; b++){
+//                 printf("%f ", A2[a*n+b]);
+//             }
+//             printf("\n");
+//         }
+//         printf("\n");
         
     
-        printf("B2\n");
-        for (a = 0; a < n; a++) printf("%f ", B2[a]);
-        printf("\n"); printf("\n");
+//         printf("B2\n");
+//         for (a = 0; a < n; a++) printf("%f ", B2[a]);
+//         printf("\n"); printf("\n");
         
 
         free(A1);
