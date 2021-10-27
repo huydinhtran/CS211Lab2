@@ -122,7 +122,7 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
         
         for (i=n-2 ; i>=0 ; i--){
             for (a=i+1 ; a < n ; a++){
-                y[i] -= A[a*n+i] * y[a];
+                y[i] -= A[i*n+a] * y[a];
             }
             y[i] = y[i] / A[i*n + i];
         }
