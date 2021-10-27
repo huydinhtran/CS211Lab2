@@ -32,7 +32,7 @@ int mydgetrf(double *A, int *ipiv, int n)
 {
     /* add your code here */
     int maxind;
-    int temps;
+    double temps;
     double max;
     double tempv[n];
     int i, t, j, k;
