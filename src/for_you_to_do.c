@@ -313,4 +313,5 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
 //         }                        
 //     }  
     return 0;
+    }
 }
