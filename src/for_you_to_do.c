@@ -261,16 +261,16 @@ void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
 int mydgetrf_block(double *A, int *ipiv, int n, int b) 
 {
     int ib, end;
-    for ( ib = 1 ; ib <= n-1 ; ib += b){
+    int maxind;       
+    int temps;        
+    double max;        
+    double tempv[n];        
+    int i, t, j, k;        
+    int x, y, z;
+    for ( ib = 1 ; ib < n-1 ; ib += b){
         end = ib + b-1;         
 //         //apply BLAS2 version of GEPP to  get A(ib:n , ib:end) = P’ * L’ * U’
-        int maxind;
-        int temps;
-        double max;
-        double tempv[n];
-        int i, t, j, k;
-        int x, y, z;
-        for (i = ib ; i < ib+b-1 ; i++){
+        for (i = ib ; i < end ; i++){
             maxind = i; 
             max = fabs(A[i*n+i]); 
             for (t = i+1 ; t < ib+b ; t++){
@@ -289,9 +289,9 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
                 for (y=0 ; y < ib+b ; y++) A[i*n+y] = A[maxind*n+y]; 
                 for (z=0 ; z < ib+b ; z++) A[maxind*n+z] = tempv[z];
             }
-            for (j = i+1 ; j < ib+b ; j++) { 
+            for (j = i+1 ; j < n ; j++) { 
                 A[j*n+i] = A[j*n+i]/A[i*n+i];
-                for (k = i+1 ; k < ib+b ; k++) 
+                for (k = i+1 ; k < end ; k++) 
                     A[j*n+k] = A[j*n+k] - A[j*n+i] * A[i*n+k]; 
             } 
         }
