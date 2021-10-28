@@ -1,12 +1,9 @@
 #include "../include/for_you_to_do.h"
 
-
-
 int get_block_size(){
     //return the block size you'd like to use 
     /*add your code here */
     return 2;
-  
 }
 
 /**
@@ -228,7 +225,6 @@ void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
     }
     return;
 }
-
 
 /**
  * 
