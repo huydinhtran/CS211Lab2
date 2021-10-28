@@ -273,7 +273,7 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
         for (i = ib ; i < end ; i++){
             maxind = i; 
             max = fabs(A[i*n+i]); 
-            for (t = i+1 ; t < ib+b ; t++){
+            for (t = i+1 ; t < end ; t++){
                 if (fabs(A[t*n+i]) > max ) {
                     maxind = t; 
                     max = fabs(A[t*n+i]); 
@@ -285,9 +285,9 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
                 temps = ipiv[i]; 
                 ipiv[i] = ipiv[maxind]; 
                 ipiv[maxind] = temps;
-                for (x=0 ; x < ib+b ; x++) tempv[x] = A[i*n+x]; 
-                for (y=0 ; y < ib+b ; y++) A[i*n+y] = A[maxind*n+y]; 
-                for (z=0 ; z < ib+b ; z++) A[maxind*n+z] = tempv[z];
+                for (x=0 ; x < end ; x++) tempv[x] = A[i*n+x]; 
+                for (y=0 ; y < end ; y++) A[i*n+y] = A[maxind*n+y]; 
+                for (z=0 ; z < end ; z++) A[maxind*n+z] = tempv[z];
             }
             for (j = i+1 ; j < n ; j++) { 
                 A[j*n+i] = A[j*n+i]/A[i*n+i];
