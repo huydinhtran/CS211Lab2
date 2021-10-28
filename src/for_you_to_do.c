@@ -307,7 +307,6 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
 //                 A[i*n+j] = A[i*n+j] * A[j*n+i];
 //             }
 //         }                        
-//     }  
+    }  
     return 0;
-    }
 }
