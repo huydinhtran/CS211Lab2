@@ -251,8 +251,10 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
             } 
         }
         
-        double **L[n][n]; 
-        double **U[n][n]; 
+        double* L; 
+        L = (double*) malloc (n * n * sizeof(double)); 
+        double* U; 
+        U = (double*) malloc (n * n * sizeof(double));
         for(i=0;i<n;i++) 
             L[i*n+1]=A[i*n+1];
         
