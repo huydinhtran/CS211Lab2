@@ -162,10 +162,10 @@ void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
                         register double B4=B[(k1+1)*n + (j1+1)];                        
                         
                         for (k1 = k; k1 < k+b; k1++){                            
-                            C1 = A1 * B1 + A2 * B2 + C1;                                       
-                            C2 = A3 * B1 + A4 * B3 + C2;                    
-                            C3 = A1 * B3 + A2 * B4 + C3;                    
-                            C4 = A3 * B3 + A4 * B4 + C4;
+                            C1 = A1 * B1 - A2 * B2 + C1;                                       
+                            C2 = A3 * B1 - A4 * B3 + C2;                    
+                            C3 = A1 * B3 - A2 * B4 + C3;                    
+                            C4 = A3 * B3 - A4 * B4 + C4;
                         }                        
                         C[i1*n + j1]        =C1;
                         C[(i1+1)*n + j1]    =C2;
@@ -282,11 +282,34 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
             }
         }
         
-        // A(end+1:n , end+1:n ) -= A(end+1:n , ib:end) * A(ib:end , end+1:n)  
-        for (i = end+1 ; i < n ; i++){
-            for (j = ib ; j < end ; j++){
-                for (k = end+1 ; k < n ; k++)
-                    A[i*n+i] -= A[i*n+j] * A[j*n+k];
+        double *A1; 
+        A1 = (double *) malloc ((n * n) * sizeof(double)); 
+        double *A2; 
+        A2 = (double *) malloc ((n * n) * sizeof(double));
+        double *A3; 
+        A3 = (double *) malloc ((n * n) * sizeof(double)); 
+        
+        
+        // A(end+1:n , end+1:n ) -= A(end+1:n , ib:end) * A(ib:end , end+1:n)
+        
+        
+        for (i = end+1 ; i < n ; i++)
+            for (j = end+1 ; j < n ; j++)
+                A1[i*n+j] = A[i*n+j];
+        
+        for (i = end+1 ; i < n ; i++)
+            for (j = ib ; j < end ; j++)
+                A2[i*n+j] = A[i*n+j];
+        
+        for (i = ib ; i < end ; i++)
+            for (j = end+1 ; j < n ; j++)
+                A3[i*n+j] = A[i*n+j];
+        
+        mydgemm(*A3, *A2, *A1, n, 0, 0, 0, b);
+        
+        for (i = 0 ; i < n ; i++)
+            for (j = 0 ; j < n ; j++)
+                A[i*n+j] = A1[i*n+j];
             }
         }                        
     }  
