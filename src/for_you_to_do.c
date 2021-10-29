@@ -282,12 +282,12 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
             }
         }
         
-//         double *A1; 
-//         A1 = (double *) malloc ((n * n) * sizeof(double)); 
-//         double *A2; 
-//         A2 = (double *) malloc ((n * n) * sizeof(double));
-//         double *A3; 
-//         A3 = (double *) malloc ((n * n) * sizeof(double)); 
+        double *A1; 
+        A1 = (double *) malloc ((n * n) * sizeof(double)); 
+        double *A2; 
+        A2 = (double *) malloc ((n * n) * sizeof(double));
+        double *A3; 
+        A3 = (double *) malloc ((n * n) * sizeof(double)); 
         
         
 //         // A(end+1:n , end+1:n ) -= A(end+1:n , ib:end) * A(ib:end , end+1:n)
