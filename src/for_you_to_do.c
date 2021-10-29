@@ -251,8 +251,8 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
             } 
         }
         
-        double *L[n][n]; 
-        double *U[n][n]; 
+        double **L[n][n]; 
+        double **U[n][n]; 
         for(i=0;i<n;i++) 
             L[i*n+1]=A[i*n+1];
         
