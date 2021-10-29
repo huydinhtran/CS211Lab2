@@ -310,10 +310,10 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
         
         mydgemm(A3, A2, A1, n, 0, 0, 0, b);
         
-//         for (i = 0 ; i < n ; i++){
-//             for (j = 0 ; j < n ; j++)
+        for (i = 0 ; i < n ; i++){
+            for (j = 0 ; j < n ; j++)
 //                 A[i*n+j] = A1[i*n+j];
-//         }
+        }
     }  
     return 0;
 }
