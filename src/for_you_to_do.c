@@ -254,23 +254,23 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
         double L[n][n]; 
         double U[n][n]; 
         for(i=0;i<n;i++) 
-            L[i][1]=A[i][1];
+            L[i*n+1]=A[i*n+1];
         
         for(j=2;j<=n;j++)
-            U[1][j]=A[1][j]/L[1][1];
+            U[1*n+j]=A[1*n+j]/L[1*n+1];
         for(i=0;i<n;i++)
-            U[i][i]=1;
+            U[i*n+i]=1;
         for(i=2;i<=n;i++)
             for(j=2;j<=n;j++)
                 if(i>=j){ 
-                    L[i][j]=A[i][j];
+                    L[i*n+j]=A[i*n+j];
                     for(k=1;k<=j-1;k++)
-                        L[i][j]-=L[i][k]*U[k][j];
+                        L[i*n+j]-=L[i*n+k]*U[k*n+j];
                 }else{             
-                    U[i][j]=A[i][j];
+                    U[i*n+j]=A[i*n+j];
                     for(k=1;k<=j-1;k++)
-                        U[i][j] = -L[i][k]*U[k][j];
-                    U[i][j] /= L[i][i];
+                        U[i*n+j] = -L[i*n+k]*U[k*n+j];
+                    U[i*n+j] /= L[i*n+i];
                 }
        
         // A(ib:end , end+1:n) = LL-1 * A(ib:end , end+1:n)
