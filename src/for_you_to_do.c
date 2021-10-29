@@ -221,7 +221,7 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
     double max;        
     double tempv[n];        
     int i, t, j, k;        
-    int x, y, z;
+    int x, y, z, q, w, e;
     for ( ib = 1 ; ib < n-1 ; ib += b){
         end = ib + b-1;         
 //         //apply BLAS2 version of GEPP to  get A(ib:n , ib:end) = P’ * L’ * U’
@@ -250,22 +250,41 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
                     A[j*n+k] = A[j*n+k] - A[j*n+i] * A[i*n+k]; 
             } 
         }
-
-//         //… let LL denote the strict lower triangular part of A(ib:end , ib:end) + I  //… update next b rows of U //… apply delayed updates with single matrix-multiply  //… with inner dimension b
         
-//         // A(ib:end , end+1:n) = LL-1 * A(ib:end , end+1:n)
-//         for (i = ib ; i < end ; i++){
-//             for (j = end+1 ; j < ib+b ; j++){
-//                 A[i*n+j] = LL-1 * A[i*n+j];
-//             }
-//         }
+        double L[n][n]; 
+        for(i=0;i<n;i++) 
+            L[i][1]=A[i][1];
+        
+        for(j=2;j<=n;j++)
+            U[1][j]=A[1][j]/L[1][1];
+        for(i=0;i<n;i++)
+            U[i][i]=1;
+        for(i=2;i<=n;i++)
+            for(j=2;j<=n;j++)
+                if(i>=j){ 
+                    L[i][j]=A[i][j];
+                    for(k=1;k<=j-1;k++)
+                        L[i][j]-=L[i][k]*U[k][j];
+                }else{             
+                    U[i][j]=A[i][j];
+                    for(k=1;k<=j-1;k++)
+                        U[i][j] = -L[i][k]*U[k][j];
+                    U[i][j] /= L[i][i];
+                }
+       
+        // A(ib:end , end+1:n) = LL-1 * A(ib:end , end+1:n)
+        for (i = ib ; i < end ; i++){
+            for (j = end+1 ; j < ib+b ; j++){
+                A[i*n+j] = L * A[i*n+j];
+            }
+        }
         
 //         // A(end+1:n , end+1:n ) -= A(end+1:n , ib:end) * A(ib:end , end+1:n)  
-//         for (i = end+1 ; i < ib+b ; i++){
-//             for (j = ib ; j < end ; j++){
-//                 A[i*n+j] = A[i*n+j] * A[j*n+i];
-//             }
-//         }                        
+        for (i = end+1 ; i < ib+b ; i++){
+            for (j = ib ; j < end ; j++){
+                A[i*n+j] = A[i*n+j] * A[j*n+i];
+            }
+        }                        
     }  
     return 0;
 }
