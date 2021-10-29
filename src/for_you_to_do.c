@@ -138,91 +138,50 @@ void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
 {
     /* add your code here */
     /* please just copy from your lab1 function optimal( ... ) */
-    for (i = 0; i < n; i += 3) {
-        for (j = 0; j < n; j += 3) {
-            register int t   = i*n+j; 
-            register int tt  = t+n; 
-            register int ttt = tt+n; 
-            register double x00 = C[t];
-            register double x01 = C[t+1];
-            register double x02 = C[t+2];
-            register double x10 = C[tt];
-            register double x11 = C[tt+1];
-            register double x12 = C[tt+2];
-            register double x20 = C[ttt];
-            register double x21 = C[ttt+1];
-            register double x22 = C[ttt+2];
-            for (k = 0; k < n; k += 3) {
-                register int ta   = i*n+k;
-                register int tta  = ta+n;
-                register int ttta = tta+n;
-                register int tb   = k*n+j;
-                register int ttb  = tb+n;
-                register int tttb = ttb+n;
-
-                register double R1 = A[ta]; 
-                register double R2 = A[tta]; 
-                register double R3 = A[ttta];
-                register double R4 = B[tb]; 
-                register double R5 = B[tb+1]; 
-                register double R6 = B[tb+2]; 
-
-                x00 += R1 * R4;
-                x01 += R1 * R5;
-                x02 += R1 * R6;
-                x10 += R2 * R4;
-                x11 += R2 * R5;
-                x12 += R2 * R6;
-                x20 += R3 * R4;
-                x21 += R3 * R5;
-                x22 += R3 * R6;
-
-                R1 = A[ta+1];
-                R2 = A[tta+1];
-                R3 = A[ttta+1];
-                R4 = B[ttb];
-                R5 = B[ttb+1];
-                R6 = B[ttb+2];
-
-                x00 += R1 * R4;
-                x01 += R1 * R5;
-                x02 += R1 * R6;
-                x10 += R2 * R4;
-                x11 += R2 * R5;
-                x12 += R2 * R6;
-                x20 += R3 * R4;
-                x21 += R3 * R5;
-                x22 += R3 * R6;
-
-                R1 = A[ta+2];
-                R2 = A[tta+2];
-                R3 = A[ttta+2];
-                R4 = B[tttb];
-                R5 = B[tttb+1];
-                R6 = B[tttb+2];
-
-                x00 += R1 * R4;
-                x01 += R1 * R5;
-                x02 += R1 * R6;
-                x10 += R2 * R4;
-                x11 += R2 * R5;
-                x12 += R2 * R6;
-                x20 += R3 * R4;
-                x21 += R3 * R5;
-                x22 += R3 * R6;
-            
-            }
-            C[t]     = x00;
-            C[t+1]   = x01;
-            C[t+2]   = x02;
-            C[tt]    = x10;
-            C[tt+1]  = x11;
-            C[tt+2]  = x12;
-            C[ttt]   = x20;
-            C[ttt+1] = x21;
-            C[ttt+2] = x22;
-        }
-    }
+    /* Multiply n x n matrices a and b  */
+    int i, j, k, i1, j1, k1;
+    for (i = 0; i < n; i+=b)
+        for (j = 0; j < n; j+=b)
+            for (k = 0; k < n; k+=b)
+             /* B x B mini matrix multiplications */
+                for (i1 = i; i1 < i+b; i1++)
+                    for (j1 = j; j1 < j+b; j1++){
+                        register double C1=C[i1*n + j1];
+                        register double C2=C[(i1+1)*n + j1];                           
+                        register double C3=C[i1*n + (j1+1)];
+                        register double C4=C[(i1+1)*n + (j1+1)];
+                        
+                        register double A1=A[i1*n + k1];                           
+                        register double A2=A[i1*n + k1+1];
+                        register double A3=A[(i1+1)*n + k1];
+                        register double A4=A[(i1+1)*n + k1+1];
+                        
+                        register double B1=B[k1*n + j1];                           
+                        register double B2=B[(k1+1)*n + j1];
+                        register double B3=B[k1*n + (j1+1)];                           
+                        register double B4=B[(k1+1)*n + (j1+1)];                        
+                        
+                        for (k1 = k; k1 < k+b; k1++){                            
+                            C1 = A1 * B1 + A2 * B2 + C1;                                       
+                            C2 = A3 * B1 + A4 * B3 + C2;                    
+                            C3 = A1 * B3 + A2 * B4 + C3;                    
+                            C4 = A3 * B3 + A4 * B4 + C4;
+                        }                        
+                        C[i1*n + j1]        =C1;
+                        C[(i1+1)*n + j1]    =C2;
+                        C[i1*n + (j1+1)]    =C3;
+                        C[(i1+1)*n + (j1+1)]=C4;                        
+                        
+                        A[i1*n + k1]        =A1;                           
+                        A[i1*n + k1+1]      =A2;
+                        A[(i1+1)*n + k1]    =A3;
+                        A[(i1+1)*n + k1+1]  =A4;
+                        
+                        B[k1*n + j1]        =B1;                           
+                        B[(k1+1)*n + j1]    =B2;
+                        B[k1*n + (j1+1)]    =B3;                           
+                        B[(k1+1)*n + (j1+1)]=B4;
+                    }
     return;
 }
 
