@@ -257,7 +257,7 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
         LL = (double*) malloc (n * sizeof(double));
         LL[0] = A[ipiv[0]];
         for (i=1 ; i<n ; i++){
-            x[i] = A[ipiv[i]];
+            LL[i] = A[ipiv[i]];
             for (a=0 ; a <= i-1 ; a++){
                 LL[i] -= A[i*n+a] * LL[a];
             }
