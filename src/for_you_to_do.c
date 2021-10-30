@@ -263,7 +263,7 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
         // A(ib:end , end+1:n) = A(ib:end , end+1:n)/LL
         for (i = ib ; i < end ; i++){
             for (j = end+1 ; j < n ; j++){
-                A[i*n+j] = A[i*n+j] / (*LL);
+                A[i*n+j] = (*LL) / A[i*n+j];
             }
         }
         
