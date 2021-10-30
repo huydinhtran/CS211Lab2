@@ -253,7 +253,7 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
         double* LL; 
         LL = (double*) malloc (n * sizeof(double));
         LL[0] = A[ipiv[0]];
-        for (i=1 ; i<end ; i++){
+        for (i=1 ; i<n ; i++){
             LL[i] = A[ipiv[i]];
             for (a=0 ; a <= i-1 ; a++){
                 LL[i] -= A[i*n+a] * LL[a];
@@ -288,6 +288,7 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
                 A3[i*n+j] = A[i*n+j];
         }
         
+        //Matrix multiplication A(end+1:n , end+1:n ) = A(end+1:n , end+1:n )- A(end+1:n , ib:end) * A(ib:end , end+1:n)    
         mydgemm(A3, A2, A1, n, 0, 0, 0, b);
         for (i = 0 ; i < n ; i++){
             for (j = 0 ; j < n ; j++)
