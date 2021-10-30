@@ -290,10 +290,12 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
         
         //Matrix multiplication A(end+1:n , end+1:n ) = A(end+1:n , end+1:n )- A(end+1:n , ib:end) * A(ib:end , end+1:n)    
         mydgemm(A3, A2, A1, n, 0, 0, 0, b);
-        for (i = end+1 ; i < n ; i++){
-            for (j = end+1 ; j < n ; j++)
-                A[i*n+j] = A1[i*n+j];
-        }
+
+        
+//         for (i = end+1 ; i < n ; i++){
+//             for (j = end+1 ; j < n ; j++)
+//                 A[i*n+j] = A1[i*n+j];
+//         }
     }  
     return 0;
 }
