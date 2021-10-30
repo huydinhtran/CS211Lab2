@@ -224,7 +224,7 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
     int x, y, z, q, w, e, a;
     for ( ib = 1 ; ib < n-1 ; ib += b){
         end = ib + b-1;         
-//         //apply BLAS2 version of GEPP to  get A(ib:n , ib:end) = P’ * L’ * U’
+        //apply BLAS2 version of GEPP to  get A(ib:n , ib:end) = P’ * L’ * U’
         for (i = ib ; i < end ; i++){
             maxind = i; 
             max = fabs(A[i*n+i]); 
@@ -250,6 +250,8 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
                     A[j*n+k] = A[j*n+k] - A[j*n+i] * A[i*n+k]; 
             } 
         }
+        
+        //Getting LL
         //the “A” is the LL and the “B” is the part of A
         double* LL; 
         LL = (double*) malloc (n * sizeof(double));
@@ -276,8 +278,7 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
         A3 = (double *) malloc ((n * n) * sizeof(double)); 
         
         
-//         // A(end+1:n , end+1:n ) -= A(end+1:n , ib:end) * A(ib:end , end+1:n)
-        
+        // A(end+1:n , end+1:n ) -= A(end+1:n , ib:end) * A(ib:end , end+1:n)
         
         for (i = end+1 ; i < n ; i++){
             for (j = end+1 ; j < n ; j++)
