@@ -141,7 +141,6 @@ void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
     for (i = 0; i < n; i+=b)
         for (j = 0; j < n; j+=b)
             for (k = 0; k < n; k+=b)
-             /* B x B mini matrix multiplications */
                 for (i1 = i; i1 < i+b; i1++)
                     for (j1 = j; j1 < j+b; j1++){
                         register double C1=C[i1*n + j1];
