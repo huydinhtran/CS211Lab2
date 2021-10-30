@@ -137,8 +137,6 @@ void mydtrsv(char UPLO, double *A, double *B, int n, int *ipiv)
 void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
 {
     /* add your code here */
-    /* please just copy from your lab1 function optimal( ... ) */
-    /* Multiply n x n matrices a and b  */
     int i1, j1, k1;
     for (i = 0; i < n; i+=b)
         for (j = 0; j < n; j+=b)
