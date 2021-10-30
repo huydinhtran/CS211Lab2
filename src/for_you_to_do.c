@@ -221,7 +221,7 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
     double max;        
     double tempv[n];        
     int i, t, j, k;        
-    int x, y, z, q, w, e;
+    int x, y, z, q, w, e, a;
     for ( ib = 1 ; ib < n-1 ; ib += b){
         end = ib + b-1;         
 //         //apply BLAS2 version of GEPP to  get A(ib:n , ib:end) = P’ * L’ * U’
@@ -250,35 +250,21 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
                     A[j*n+k] = A[j*n+k] - A[j*n+i] * A[i*n+k]; 
             } 
         }
-        
-        double *L; 
-        L = (double *) malloc ((n * n) * sizeof(double)); 
-        double *U; 
-        U = (double *) malloc ((n * n) * sizeof(double));
-        for(i=0;i<n;i++) 
-            L[i*n+1]=A[i*n+1];
-        
-        for(j=2;j<=n;j++)
-            U[1*n+j]=A[1*n+j]/L[1*n+1];
-        for(i=0;i<n;i++)
-            U[i*n+i]=1;
-        for(i=2;i<=n;i++)
-            for(j=2;j<=n;j++)
-                if(i>=j){ 
-                    L[i*n+j]=A[i*n+j];
-                    for(k=1;k<=j-1;k++)
-                        L[i*n+j]-=L[i*n+k]*U[k*n+j];
-                }else{             
-                    U[i*n+j]=A[i*n+j];
-                    for(k=1;k<=j-1;k++)
-                        U[i*n+j] = -L[i*n+k]*U[k*n+j];
-                    U[i*n+j] /= L[i*n+i];
-                }
+        //the “A” is the LL and the “B” is the part of A
+        double* LL; 
+        LL = (double*) malloc (n * sizeof(double));
+        LL[0] = A[ipiv[0]];
+        for (i=1 ; i<n ; i++){
+            x[i] = A[ipiv[i]];
+            for (a=0 ; a <= i-1 ; a++){
+                LL[i] -= A[i*n+a] * LL[a];
+            }
+        }
        
         // A(ib:end , end+1:n) = LL-1 * A(ib:end , end+1:n)
         for (i = ib ; i < end ; i++){
-            for (j = end+1 ; j < ib+b ; j++){
-                A[i*n+j] = (*L) * A[i*n+j];
+            for (j = end+1 ; j < n ; j++){
+                A[i*n+j] = (*LL) * A[i*n+j];
             }
         }
         
