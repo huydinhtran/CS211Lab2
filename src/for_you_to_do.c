@@ -159,10 +159,10 @@ void mydgemm(double *A, double *B, double *C, int n, int i, int j, int k, int b)
                         register double B4=B[(k1+1)*n + (j1+1)];                        
                         
                         for (k1 = k; k1 < k+b; k1++){                            
-                            C1 = A1 * B1 - A2 * B2 + C1;                                       
-                            C2 = A3 * B1 - A4 * B3 + C2;                    
-                            C3 = A1 * B3 - A2 * B4 + C3;                    
-                            C4 = A3 * B3 - A4 * B4 + C4;
+                            C1 = -(A1 * B1) - (A2 * B2) + C1;                                       
+                            C2 = -(A3 * B1) - (A4 * B3) + C2;                    
+                            C3 = -(A1 * B3) - (A2 * B4) + C3;                    
+                            C4 = -(A3 * B3) - (A4 * B4) + C4;
                         }                        
                         C[i1*n + j1]        =C1;
                         C[(i1+1)*n + j1]    =C2;
