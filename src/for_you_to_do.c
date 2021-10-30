@@ -267,6 +267,7 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
             }
         }
         
+        // A(end+1:n , end+1:n ) -= A(end+1:n , ib:end) * A(ib:end , end+1:n)
         double *A1; 
         A1 = (double *) malloc ((n * n) * sizeof(double)); 
         double *A2; 
@@ -274,25 +275,20 @@ int mydgetrf_block(double *A, int *ipiv, int n, int b)
         double *A3; 
         A3 = (double *) malloc ((n * n) * sizeof(double)); 
         
-        
-        // A(end+1:n , end+1:n ) -= A(end+1:n , ib:end) * A(ib:end , end+1:n)
         for (i = end+1 ; i < n ; i++){
             for (j = end+1 ; j < n ; j++)
                 A1[i*n+j] = A[i*n+j];
         }
-        
         for (i = end+1 ; i < n ; i++){
             for (j = ib ; j < end ; j++)
                 A2[i*n+j] = A[i*n+j];
         }
-        
         for (i = ib ; i < end ; i++){
             for (j = end+1 ; j < n ; j++)
                 A3[i*n+j] = A[i*n+j];
         }
         
         mydgemm(A3, A2, A1, n, 0, 0, 0, b);
-        
         for (i = 0 ; i < n ; i++){
             for (j = 0 ; j < n ; j++)
                 A[i*n+j] = A1[i*n+j];
